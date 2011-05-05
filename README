@@ -1,0 +1,49 @@
+This is a small C example to test how to work with the AtkSocket and
+AtkPlug classes from ATK, based on the one written in C# by Mike
+Gorse, which can be downloaded from here:
+
+  http://mgorse.freeshell.org/plug-socket-test.tar.gz
+
+An important requirement for the communication between the socket and
+the plug to work is to have at-spi2 installed (and the registry daemon
+running), as well as the at-spi2-atk bridge, which is what actually
+implements the atk_socket_embed() and the atk_plug_get_id() methods-
+
+The way I'm currently testing is, basically by:
+
+  1) Compile the socket and the plug test applications separately:
+
+    $ cd socket/
+    $ make
+
+    $ cd plug/
+    $ make
+
+  2) Ensure the at-spi2 registry daemon is running before executing
+  the test applications. I do it manually from my jhbuild environment:
+
+    $ jhbuild run /opt/gnome3/libexec/at-spi-bus-launcher --launch-inmediately
+    $ jhbuild run /opt/gnome3/libexec/at-spi2-registryd
+
+  ...but perhaps you already have it running so you can skip this step.
+
+  3) Run the socket and the plug test applications, in separate
+  terminals, loading the needed GTK modules for a11y stuff:
+
+    $ GTK_MODULES=gail:atk-bridge socket/ta-socket
+
+    $ GTK_MODULES=gail:atk-bridge plug/ta-plug
+
+  4) Grab the Plug ID shown by the ta-plug application, paste it in
+  the empty entry in the ta-socket application and press "Connect".
+
+  5) Open Accerciser and you should see two applications like this::
+
+       ta-plug: will show the AtkObject's for all its widgets as every
+       -------- regular GTK application does.
+
+     ta-socket: will show the AtkObject's for all its widgets as
+     ---------- every regular GTK application does but also, hanging
+                as a child for the panel named as "The Socket", the
+                full accessible hierarchy from ta-plug, starting in
+                the AtkObject named as "The Plug".
