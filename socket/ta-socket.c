@@ -22,7 +22,6 @@
  */
 #include "ta-socket-label.h"
 
-#include "ta-socket-accessible-factory.h"
 #include <gtk/gtk.h>
 
 #define WINDOW_WIDTH 300
@@ -90,8 +89,6 @@ main (int argc, char**argv)
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
-
-  ta_socket_accessible_factory_initialize ();
 
   _create_widgets (window);
 

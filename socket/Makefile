@@ -4,9 +4,7 @@ SOURCES=ta-socket.c \
 	ta-socket-label.h \
 	ta-socket-label.c \
 	ta-socket-accessible.h \
-	ta-socket-accessible.c \
-	ta-socket-accessible-factory.h \
-	ta-socket-accessible-factory.c
+	ta-socket-accessible.c
 
 LIBS=atk gtk+-3.0
 CFLAGS=`pkg-config --cflags $(LIBS)`

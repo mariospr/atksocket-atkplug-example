@@ -22,13 +22,32 @@
  */
 #include "ta-socket-label.h"
 
+#include "ta-socket-accessible.h"
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
 G_DEFINE_TYPE (TaSocketLabel, ta_socket_label, GTK_TYPE_LABEL);
 
+
+static AtkObject *_get_accessible (GtkWidget *widget)
+{
+  static AtkObject *new = NULL;
+
+  if (!new)
+    {
+      new = ta_socket_accessible_new ();
+      atk_object_initialize (new, G_OBJECT (widget));
+    }
+
+  return new;
+}
+
 static void ta_socket_label_class_init (TaSocketLabelClass *klass)
 {
+  GtkWidgetClass *widget_class = (GtkWidgetClass *)klass;
+
+  widget_class->get_accessible = _get_accessible;
 }
 
 static void ta_socket_label_init(TaSocketLabel *socket)
