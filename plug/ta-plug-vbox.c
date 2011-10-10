@@ -22,13 +22,31 @@
  */
 #include "ta-plug-vbox.h"
 
+#include "ta-plug-accessible.h"
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
 G_DEFINE_TYPE (TaPlugVBox, ta_plug_vbox, GTK_TYPE_VBOX);
 
+static AtkObject *_get_accessible (GtkWidget *widget)
+{
+  static AtkObject *new = NULL;
+
+  if (!new)
+    {
+      new = ta_plug_accessible_new ();
+      atk_object_initialize (new, G_OBJECT (widget));
+    }
+
+  return new;
+}
+
 static void ta_plug_vbox_class_init (TaPlugVBoxClass *klass)
 {
+  GtkWidgetClass *widget_class = (GtkWidgetClass *)klass;
+
+  widget_class->get_accessible = _get_accessible;
 }
 
 static void ta_plug_vbox_init(TaPlugVBox *plug)

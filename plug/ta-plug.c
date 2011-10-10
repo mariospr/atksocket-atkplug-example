@@ -22,7 +22,6 @@
  */
 #include "ta-plug-vbox.h"
 
-#include "ta-plug-accessible-factory.h"
 #include <gtk/gtk.h>
 
 #define WINDOW_WIDTH 350
@@ -58,8 +57,6 @@ main (int argc, char**argv)
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
-
-  ta_plug_accessible_factory_initialize ();
 
   plug = ta_plug_vbox_new (FALSE, 0);
   plug_id = ta_plug_vbox_get_id (TA_PLUG_VBOX (plug));
