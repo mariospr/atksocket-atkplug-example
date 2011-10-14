@@ -30,9 +30,9 @@ The way I'm currently testing is, basically by:
   3) Run the socket and the plug test applications, in separate
   terminals, loading the needed GTK modules for a11y stuff:
 
-    $ GTK_MODULES=gail:atk-bridge socket/ta-socket
+    $ GTK_MODULES=atk-bridge socket/ta-socket
 
-    $ GTK_MODULES=gail:atk-bridge plug/ta-plug
+    $ GTK_MODULES=atk-bridge plug/ta-plug
 
   4) Grab the Plug ID shown by the ta-plug application, paste it in
   the empty entry in the ta-socket application and press "Connect".
